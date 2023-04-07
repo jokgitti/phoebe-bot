@@ -1,6 +1,6 @@
 const request = require("request");
 
-async function bingImageSearch(query) {
+async function bingImageSearch(query, index = 0) {
   const url = new URL("https://api.bing.microsoft.com/v7.0/images/search");
   const parameters = [
     ["q", query],
@@ -21,7 +21,7 @@ async function bingImageSearch(query) {
         reject(error);
       }
 
-      resolve(results[0] || null);
+      resolve(results[index] || null);
     });
   });
 }

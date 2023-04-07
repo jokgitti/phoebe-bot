@@ -3,12 +3,31 @@ const getTelegramBot = require("../telegramBot");
 
 const telegramBot = getTelegramBot();
 
+const lookForContext = new Map();
+
+function getOrSetEmptyContext(key, query) {
+  if (lookForContext.has(key)) {
+    const existingQuery = lookForContext.get(key);
+    if (existingQuery.query === query) {
+      return existingQuery;
+    }
+    return { query, index: 0 };
+  }
+
+  return { query, index: 0 };
+}
+
 async function lookfor(msg, match) {
   const query = match[1];
   console.log("look for: ", query);
 
+  const contextKey = `${msg.chat.id}-${msg.from.username}`;
+  const currentContext = getOrSetEmptyContext(contextKey, query);
+
+  console.log(currentContext);
+
   try {
-    const bingImage = await bingImageSearch(query);
+    const bingImage = await bingImageSearch(query, currentContext.index);
     console.log(bingImage);
 
     if (!bingImage) {
@@ -16,8 +35,12 @@ async function lookfor(msg, match) {
         msg.chat.id,
         "Sorry, I couldn't find anything ¯\\_(ツ)_/¯."
       );
+      lookForContext.delete(contextKey);
+
       return;
     }
+
+    lookForContext.set(contextKey, { query, index: currentContext.index + 1 });
 
     switch (bingImage.encodingFormat) {
       case "animatedgif": {
