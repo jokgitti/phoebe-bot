@@ -1,6 +1,6 @@
-const request = require("request");
+import request from "request";
 
-async function bingImageSearch(query, index = 0) {
+export async function bingImageSearch(query, index = 0) {
   const url = new URL("https://api.bing.microsoft.com/v7.0/images/search");
   const parameters = [
     ["q", query],
@@ -25,5 +25,3 @@ async function bingImageSearch(query, index = 0) {
     });
   });
 }
-
-module.exports = bingImageSearch;

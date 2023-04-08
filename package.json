@@ -2,6 +2,7 @@
   "name": "phoebe",
   "version": "1.0.0",
   "description": "a useless telegram bot name Phoebe",
+  "type": "module",
   "engines": {
     "node": "16.15.0",
     "npm": "8.5.5"

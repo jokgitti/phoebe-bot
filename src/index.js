@@ -1,5 +1,5 @@
-const getTelegramBot = require("./telegramBot");
-const lookfor = require("./text/lookfor");
+import { getTelegramBot } from "./telegramBot.js";
+import { lookfor } from "./text/lookfor.js";
 
 console.log(process.env.TELEGRAM_API_KEY);
 console.log(process.env.BING_SEARCH_API_KEY);

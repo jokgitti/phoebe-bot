@@ -1,5 +1,5 @@
-const bingImageSearch = require("../bingImageSearch");
-const getTelegramBot = require("../telegramBot");
+import { getTelegramBot } from "../telegramBot.js";
+import { bingImageSearch } from "../bingImageSearch.js";
 
 const telegramBot = getTelegramBot();
 
@@ -17,7 +17,7 @@ function getOrSetEmptyContext(key, query) {
   return { query, index: 0 };
 }
 
-async function lookfor(msg, match) {
+export async function lookfor(msg, match) {
   const query = match[1];
   console.log("look for: ", query);
 
@@ -60,5 +60,3 @@ async function lookfor(msg, match) {
     telegramBot.sendMessage(msg.chat.id, "something went wrong :(");
   }
 }
-
-module.exports = lookfor;

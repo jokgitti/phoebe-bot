@@ -1,8 +1,8 @@
-const TelegramBot = require("node-telegram-bot-api");
+import TelegramBot from "node-telegram-bot-api";
 
 let telegramBot = null;
 
-function getTelegramBot() {
+export function getTelegramBot() {
   if (!telegramBot) {
     telegramBot = new TelegramBot(process.env.TELEGRAM_API_KEY, {
       polling: true,
@@ -10,5 +10,3 @@ function getTelegramBot() {
   }
   return telegramBot;
 }
-
-module.exports = getTelegramBot;
