@@ -4,8 +4,8 @@
   "description": "a useless telegram bot name Phoebe",
   "type": "module",
   "engines": {
-    "node": "16.15.0",
-    "npm": "8.5.5"
+    "node": "18.15.0",
+    "npm": "9.5.0"
   },
   "main": "index.js",
   "scripts": {
@@ -15,14 +15,16 @@
   "author": "jokgitti",
   "license": "ISC",
   "dependencies": {
+    "dotenv": "^16.0.3",
     "node-telegram-bot-api": "^0.61.0",
+    "pino": "^8.11.0",
     "request": "^2.88.2"
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
   },
   "volta": {
-    "node": "16.15.0",
-    "npm": "8.5.5"
+    "node": "18.15.0",
+    "npm": "9.5.0"
   }
 }
