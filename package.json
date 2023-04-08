@@ -2,6 +2,10 @@
   "name": "phoebe",
   "version": "1.0.0",
   "description": "a useless telegram bot name Phoebe",
+  "engines": {
+    "node": "16.15.0",
+    "npm": "8.5.5"
+  },
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -15,5 +19,9 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.22"
+  },
+  "volta": {
+    "node": "16.15.0",
+    "npm": "8.5.5"
   }
 }
