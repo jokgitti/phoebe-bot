@@ -1,7 +1,9 @@
 import { bingImageSearch } from "../bingImageSearch.js"
 import logger from "../helpers/logger.js"
+import { getOpenAI } from "../openAi.js"
 import { getTelegramBot } from "../telegramBot.js"
 
+const openAI = getOpenAI()
 const telegramBot = getTelegramBot()
 
 const lookForContext = new Map()
@@ -43,21 +45,30 @@ export async function lookfor(msg, match) {
       index: currentContext.index + 1,
     })
 
+    const openAIResponse = await openAI.createCompletion({
+      model: "text-davinci-003",
+      prompt: `act as a sassy gen z teen, provide caption for image of ${query} max 16 words`,
+      max_tokens: 16,
+      temperature: 1.1,
+    })
+
+    const caption = openAIResponse.data.choices[0].text || `here's ${query}`
+
     switch (bingImage.encodingFormat) {
       case "animatedgif": {
         await telegramBot.sendAnimation(msg.chat.id, bingImage.contentUrl, {
-          caption: `here's ${query}`,
+          caption,
         })
         break
       }
       default: {
         await telegramBot.sendPhoto(msg.chat.id, bingImage.contentUrl, {
-          caption: `here's ${query}`,
+          caption,
         })
       }
     }
-  } catch (error) {
-    console.error(error.message || error)
+  } catch (err) {
+    logger.error({ err })
     telegramBot.sendMessage(msg.chat.id, "something went wrong :(")
   }
 }
@@ -104,8 +115,8 @@ export async function lookAgain(msg, _) {
         })
       }
     }
-  } catch (error) {
-    console.error(error.message || error)
+  } catch (err) {
+    logger.error({ err })
     telegramBot.sendMessage(msg.chat.id, "something went wrong :(")
   }
 }
