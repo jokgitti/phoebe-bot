@@ -1,0 +1,12 @@
+.git
+.github
+.vscode
+node_modules
+
+.env
+.env.example
+.gitignore
+.prettierignore
+.prettierrc
+npm-debug.log
+README.md
