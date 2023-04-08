@@ -4,8 +4,8 @@
   "description": "a useless telegram bot name Phoebe",
   "type": "module",
   "engines": {
-    "node": "16.15.0",
-    "npm": "8.5.5"
+    "node": "18.15.0",
+    "npm": "9.5.0"
   },
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
     "nodemon": "^2.0.22"
   },
   "volta": {
-    "node": "16.15.0",
-    "npm": "8.5.5"
+    "node": "18.15.0",
+    "npm": "9.5.0"
   }
 }
