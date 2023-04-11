@@ -1,6 +1,8 @@
 import { bingSearchApiKey, telegramApiKey } from "./config/index.js"
+import withAuth from "./helpers/auth.js"
 import logger, { censor } from "./helpers/logger.js"
 import { getTelegramBot } from "./telegramBot.js"
+import { help } from "./text/help.js"
 import { lookAgain, lookfor } from "./text/lookfor.js"
 
 if (!telegramApiKey) {
@@ -13,8 +15,9 @@ logger.debug(`TELEGRAM_API_KEY=${censor(telegramApiKey)}`)
 
 const telegramBot = getTelegramBot()
 
-telegramBot.onText(/phoebe look for (.+)/i, lookfor)
-telegramBot.onText(/phoebe look again/i, lookAgain)
+telegramBot.onText(/phoebe look for (.+)/i, withAuth(lookfor))
+telegramBot.onText(/phoebe look again/i, withAuth(lookAgain))
+telegramBot.onText(/phoebe help/i, help)
 
 telegramBot.on("message", ({ chat, date, from, message_id, text }) => {
   logger.debug(
