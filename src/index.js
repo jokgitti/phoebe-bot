@@ -1,7 +1,8 @@
 import { bingSearchApiKey, telegramApiKey } from "./config/index.js"
-import withAuth from "./helpers/auth.js"
+import { withAdminAuth, withAuth } from "./helpers/auth.js"
 import logger, { censor } from "./helpers/logger.js"
 import { getTelegramBot } from "./telegramBot.js"
+import { listAdmins, listUsers } from "./text/auth.js"
 import { help } from "./text/help.js"
 import { lookAgain, lookfor } from "./text/lookfor.js"
 
@@ -15,6 +16,8 @@ logger.debug(`TELEGRAM_API_KEY=${censor(telegramApiKey)}`)
 
 const telegramBot = getTelegramBot()
 
+telegramBot.onText(/phoebe list admins/i, withAdminAuth(listAdmins))
+telegramBot.onText(/phoebe list users/i, withAdminAuth(listUsers))
 telegramBot.onText(/phoebe look for (.+)/i, withAuth(lookfor))
 telegramBot.onText(/phoebe look again/i, withAuth(lookAgain))
 telegramBot.onText(/phoebe help/i, help)
