@@ -1,9 +1,8 @@
+import { getOpenAI } from "../services/openAi.js"
 import { bingImageSearch } from "../bingImageSearch.js"
 import logger from "../helpers/logger.js"
-import { getOpenAI } from "../openAi.js"
 import { getTelegramBot } from "../telegramBot.js"
 
-const openAI = getOpenAI()
 const telegramBot = getTelegramBot()
 
 const lookForContext = new Map()
@@ -18,6 +17,24 @@ function getOrSetEmptyContext(key, query) {
   }
 
   return { query, index: 0 }
+}
+
+const getImageAICaption = async (imageToCaption) => {
+  try {
+    const openAI = getOpenAI()
+
+    const openAIResponse = await openAI.createCompletion({
+      model: "text-davinci-003",
+      prompt: `act as a sassy gen z teen, provide caption for image of ${imageToCaption} max 16 words`,
+      max_tokens: 16,
+      temperature: 1.1,
+    })
+
+    return openAIResponse.data.choices[0].text
+  } catch (err) {
+    logger.error({ err })
+    return `here's ${imageToCaption}`
+  }
 }
 
 export async function lookfor(msg, match) {
@@ -45,14 +62,7 @@ export async function lookfor(msg, match) {
       index: currentContext.index + 1,
     })
 
-    const openAIResponse = await openAI.createCompletion({
-      model: "text-davinci-003",
-      prompt: `act as a sassy gen z teen, provide caption for image of ${query} max 16 words`,
-      max_tokens: 16,
-      temperature: 1.1,
-    })
-
-    const caption = openAIResponse.data.choices[0].text || `here's ${query}`
+    const caption = await getImageAICaption(query)
 
     switch (bingImage.encodingFormat) {
       case "animatedgif": {
@@ -100,7 +110,7 @@ export async function lookAgain(msg, _) {
       index: currentContext.index + 1,
     })
 
-    const caption = `here's ${currentContext.query}`
+    const caption = await getImageAICaption(currentContext.query)
 
     switch (bingImage.encodingFormat) {
       case "animatedgif": {
