@@ -1,4 +1,4 @@
-import { getOpenAI } from "../services/openAi.js"
+import { getOpenAI } from "../services/openAI.js"
 import { bingImageSearch } from "../bingImageSearch.js"
 import logger from "../helpers/logger.js"
 import { getTelegramBot } from "../telegramBot.js"
