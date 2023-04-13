@@ -22,7 +22,7 @@ function getOrSetEmptyContext(key, query) {
 const sassyImageCaptionPrompt = (image) =>
   `act as sassy gen z teen, provide caption for image of "${image}", max 16 words`
 const sassyObessedAboutPrompt = (obsession) =>
-  `act as sassy gen z teen,  reply to someone obsessed about "${obsession}", max 16 words`
+  `act as sassy gen z teen, reply to someone obsessed about "${obsession}", max 16 words`
 
 const getImageCaption = async (prompt, defaultCaption) => {
   try {
