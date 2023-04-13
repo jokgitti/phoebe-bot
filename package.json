@@ -1,6 +1,6 @@
 {
   "name": "phoebe",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "a useless telegram bot name Phoebe",
   "type": "module",
   "engines": {
