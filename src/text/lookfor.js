@@ -19,82 +19,45 @@ function getOrSetEmptyContext(key, query) {
   return { query, index: 0 }
 }
 
-const getImageAICaption = async (imageToCaption) => {
+const sassyImageCaptionPrompt = (image) =>
+  `act as sassy gen z teen, provide caption for image of "${image}", max 16 words`
+const sassyObessedAboutPrompt = (obsession) =>
+  `act as sassy gen z teen,  reply to someone obsessed about "${obsession}", max 16 words`
+
+const getImageCaption = async (prompt, defaultCaption) => {
   try {
     const openAI = getOpenAI()
 
     const openAIResponse = await openAI.createCompletion({
       model: "text-davinci-003",
-      prompt: `act as a sassy gen z teen, provide caption for image of ${imageToCaption} max 16 words`,
-      max_tokens: 16,
+      prompt,
+      max_tokens: 30,
       temperature: 1.1,
     })
 
     return openAIResponse.data.choices[0].text
   } catch (err) {
     logger.error({ err })
-    return `here's ${imageToCaption}`
+    return defaultCaption
   }
 }
 
 export async function lookfor(msg, match) {
+  logger.debug("look for handler")
+
   const query = match[1]
-  logger.debug(`look for: ${query}`)
-
   const contextKey = `${msg.chat.id}-${msg.from.username}`
-  const currentContext = getOrSetEmptyContext(contextKey, query)
 
-  logger.debug(currentContext)
-
-  try {
-    const bingImage = await bingImageSearch(query, currentContext.index)
-    logger.debug(bingImage)
-
-    if (!bingImage) {
-      await telegramBot.sendMessage(msg.chat.id, "Sorry, I couldn't find anything ¯\\_(ツ)_/¯.")
-      lookForContext.delete(contextKey)
-
-      return
-    }
-
-    lookForContext.set(contextKey, {
-      ...currentContext,
-      index: currentContext.index + 1,
-    })
-
-    const caption = await getImageAICaption(query)
-
-    switch (bingImage.encodingFormat) {
-      case "animatedgif": {
-        await telegramBot.sendAnimation(msg.chat.id, bingImage.contentUrl, {
-          caption,
-        })
-        break
-      }
-      default: {
-        await telegramBot.sendPhoto(msg.chat.id, bingImage.contentUrl, {
-          caption,
-        })
-      }
-    }
-  } catch (err) {
-    logger.error({ err })
-    telegramBot.sendMessage(msg.chat.id, "something went wrong :(")
+  if (!query && !lookForContext.has(contextKey)) {
+    logger.debug("no query was provided and no context is stored.")
+    await telegramBot.sendMessage(msg.chat.id, "Sorry, what do you want?")
   }
-}
 
-export async function lookAgain(msg, _) {
-  logger.debug("look again")
+  const currentContext = query ? getOrSetEmptyContext(contextKey, query) : lookForContext.get(contextKey)
+
+  logger.debug(`looking for:  ${JSON.stringify(currentContext)}`)
 
   try {
-    const contextKey = `${msg.chat.id}-${msg.from.username}`
-
-    if (!lookForContext.has(contextKey)) {
-      await telegramBot.sendMessage(msg.chat.id, "Sorry, look for what?")
-      return
-    }
-
-    const currentContext = lookForContext.get(contextKey)
     const bingImage = await bingImageSearch(currentContext.query, currentContext.index)
     logger.debug(bingImage)
 
@@ -105,12 +68,11 @@ export async function lookAgain(msg, _) {
       return
     }
 
-    lookForContext.set(contextKey, {
-      ...currentContext,
-      index: currentContext.index + 1,
-    })
-
-    const caption = await getImageAICaption(currentContext.query)
+    const prompt =
+      currentContext.index > 2
+        ? sassyObessedAboutPrompt(currentContext.query)
+        : sassyImageCaptionPrompt(currentContext.query)
+    const caption = await getImageCaption(prompt, `here's ${currentContext.query}`)
 
     switch (bingImage.encodingFormat) {
       case "animatedgif": {
@@ -125,6 +87,11 @@ export async function lookAgain(msg, _) {
         })
       }
     }
+
+    lookForContext.set(contextKey, {
+      ...currentContext,
+      index: currentContext.index + 1,
+    })
   } catch (err) {
     logger.error({ err })
     telegramBot.sendMessage(msg.chat.id, "something went wrong :(")
