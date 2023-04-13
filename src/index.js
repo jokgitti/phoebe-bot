@@ -1,4 +1,4 @@
-import { bingSearchApiKey, telegramApiKey } from "./config/index.js"
+import { bingSearchApiKey, telegramApiKey, openaiApiKey } from "./config/index.js"
 import { withAdminAuth, withAuth } from "./helpers/auth.js"
 import logger, { censor } from "./helpers/logger.js"
 import { getTelegramBot } from "./telegramBot.js"
@@ -13,6 +13,7 @@ if (!telegramApiKey) {
 
 logger.debug(`BING_SEARCH_API_KEY=${censor(bingSearchApiKey)}`)
 logger.debug(`TELEGRAM_API_KEY=${censor(telegramApiKey)}`)
+logger.debug(`OPENAI_API_KEY=${censor(openaiApiKey)}`)
 
 const telegramBot = getTelegramBot()
 
