@@ -31,7 +31,7 @@ export async function listAdmins(msg) {
 export async function listUsers(msg) {
   try {
     let text
-    if (!adminIds.length && !adminUsernames.length) {
+    if (!userIds.length && !userUsernames.length) {
       text = "None! 😩"
     } else {
       text = ["Here's the list of all the users:", logIds(userIds), logUsernames(userUsernames)]
