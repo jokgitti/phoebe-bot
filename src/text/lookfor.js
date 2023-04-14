@@ -72,18 +72,21 @@ export async function lookfor(msg, match) {
       currentContext.index > 2
         ? sassyObessedAboutPrompt(currentContext.query)
         : sassyImageCaptionPrompt(currentContext.query)
-    const caption = await getImageCaption(prompt, `here's ${currentContext.query}`)
+    let caption = await getImageCaption(prompt, `Here's ${currentContext.query}`)
+    caption = `${caption}\n\n<a href='${bingImage.hostPageUrl}'>Source</a>`
 
     switch (bingImage.encodingFormat) {
       case "animatedgif": {
         await telegramBot.sendAnimation(msg.chat.id, bingImage.contentUrl, {
           caption,
+          parse_mode: "HTML",
         })
         break
       }
       default: {
         await telegramBot.sendPhoto(msg.chat.id, bingImage.contentUrl, {
           caption,
+          parse_mode: "HTML",
         })
       }
     }
@@ -94,6 +97,6 @@ export async function lookfor(msg, match) {
     })
   } catch (err) {
     logger.error({ err })
-    telegramBot.sendMessage(msg.chat.id, "something went wrong :(")
+    telegramBot.sendMessage(msg.chat.id, "Something went wrong :(")
   }
 }
