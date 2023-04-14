@@ -11,9 +11,11 @@ if (!telegramApiKey) {
   process.exit(1)
 }
 
-logger.debug(`BING_SEARCH_API_KEY=${censor(bingSearchApiKey)}`)
-logger.debug(`TELEGRAM_API_KEY=${censor(telegramApiKey)}`)
-logger.debug(`OPENAI_API_KEY=${censor(openaiApiKey)}`)
+logger.debug({
+  bingSearchApiKey: censor(bingSearchApiKey),
+  openaiApiKey: censor(openaiApiKey),
+  telegramApiKey: censor(telegramApiKey),
+})
 
 const telegramBot = getTelegramBot()
 
@@ -24,20 +26,8 @@ telegramBot.onText(/phoebe look again/i, withAuth(lookfor))
 telegramBot.onText(/phoebe help/i, help)
 telegramBot.onText(/phoebe whoami/i, whoami)
 
-telegramBot.on("message", ({ chat, date, from, message_id, text }) => {
-  logger.debug(
-    {
-      chat_id: chat.id,
-      chat_title: chat.title,
-      chat_type: chat.type,
-      from_id: from.id,
-      from_username: from.username,
-      message_id: message_id,
-      message_date: date,
-      message_text: text,
-    },
-    "message received"
-  )
+telegramBot.on("message", (msg) => {
+  logger.debug({ ...msg }, "incoming message")
 })
 
 telegramBot.on("polling_error", (err) => {

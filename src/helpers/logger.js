@@ -9,9 +9,10 @@ export const censor = (s) => s.replace(censorRegex, "*")
 
 export const logger = pino({
   level: logLevel,
-  name: info.name,
-}).child({
-  version: `v${info.version}`,
+  name: `${info.name} v${info.version}`,
+  transport: {
+    target: "pino-pretty",
+  },
 })
 
 export default logger

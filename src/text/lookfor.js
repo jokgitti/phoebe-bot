@@ -43,8 +43,6 @@ const getImageCaption = async (prompt, defaultCaption) => {
 }
 
 export async function lookfor(msg, match) {
-  logger.debug("look for handler")
-
   const query = match[1]
   const contextKey = `${msg.chat.id}-${msg.from.username}`
 
@@ -55,7 +53,7 @@ export async function lookfor(msg, match) {
 
   const currentContext = query ? getOrSetEmptyContext(contextKey, query) : lookForContext.get(contextKey)
 
-  logger.debug(`looking for:  ${JSON.stringify(currentContext)}`)
+  logger.debug({ ...currentContext }, "looking for")
 
   try {
     const bingImage = await bingImageSearch(currentContext.query, currentContext.index)
