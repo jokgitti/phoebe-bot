@@ -5,6 +5,7 @@ import { getTelegramBot } from "./telegramBot.js"
 import { listAdmins, listUsers } from "./text/auth.js"
 import { help, whoami } from "./text/help.js"
 import { lookfor } from "./text/lookfor.js"
+import { paint } from "./text/paint.js"
 
 if (!telegramApiKey) {
   logger.fatal(`Invalid TELEGRAM_API_KEY value: ${telegramApiKey}`)
@@ -23,6 +24,7 @@ telegramBot.onText(/phoebe list admins/i, withAdminAuth(listAdmins))
 telegramBot.onText(/phoebe list users/i, withAdminAuth(listUsers))
 telegramBot.onText(/phoebe look for (.+)/i, withAuth(lookfor))
 telegramBot.onText(/phoebe look again/i, withAuth(lookfor))
+telegramBot.onText(/phoebe paint me (.+)/i, withAuth(paint))
 telegramBot.onText(/phoebe help/i, help)
 telegramBot.onText(/phoebe whoami/i, whoami)
 
