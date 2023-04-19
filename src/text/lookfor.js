@@ -125,6 +125,7 @@ export async function undo(msg) {
     })
 
     await telegramBot.sendMessage(msg.chat.id, openAIResponse.data.choices[0].text)
+    logger.debug({ chatId: msg.chat.id, messageId: respondedWith, username: msg.from.username }, "undo message")
     lookForContext.delete(contextKey)
   } catch (err) {
     logger.error({ err })
