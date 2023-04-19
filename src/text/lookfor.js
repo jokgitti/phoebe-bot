@@ -71,7 +71,7 @@ export async function lookfor(msg, match) {
         ? sassyObessedAboutPrompt(currentContext.query)
         : sassyImageCaptionPrompt(currentContext.query)
     let caption = await getImageCaption(prompt, `Here's ${currentContext.query}`)
-    caption = `${caption}\n\n<a href='${bingImage.hostPageUrl}'>Source</a>`
+    caption = `<a href='${bingImage.contentUrl}'>Download</a> / <a href='${bingImage.hostPageUrl}'>Source</a>${caption}`
 
     let response = null
     switch (bingImage.encodingFormat) {
