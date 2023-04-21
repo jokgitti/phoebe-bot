@@ -73,6 +73,14 @@ export async function lookfor(msg, match) {
     let caption = await getImageCaption(prompt, `Here's ${currentContext.query}`)
     caption = `<a href='${bingImage.contentUrl}'>Download</a> / <a href='${bingImage.hostPageUrl}'>Source</a>${caption}`
 
+    const nextContext = {
+      ...currentContext,
+      index: currentContext.index + 1,
+    }
+
+    // update context with last query
+    lookForContext.set(contextKey, nextContext)
+
     let response = null
     switch (bingImage.encodingFormat) {
       case "animatedgif": {
@@ -90,9 +98,9 @@ export async function lookfor(msg, match) {
       }
     }
 
+    // update context with phoebe reply
     lookForContext.set(contextKey, {
-      ...currentContext,
-      index: currentContext.index + 1,
+      ...nextContext,
       respondedWith: response.message_id,
     })
   } catch (err) {
