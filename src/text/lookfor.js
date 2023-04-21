@@ -115,13 +115,12 @@ export async function lookfor(msg, match) {
 export async function undo(msg) {
   const contextKey = `${msg.chat.id}-${msg.from.username}`
 
-  if (!lookForContext.has(contextKey)) {
-    await telegramBot.sendMessage(msg.chat.id, "¯\\_(ツ)_/¯")
-    return
-  }
-
   try {
-    const { respondedWith } = lookForContext.get(contextKey)
+    const { respondedWith } = lookForContext.has(contextKey) ? lookForContext.get(contextKey) : {}
+    if (!respondedWith) {
+      telegramBot.sendMessage(msg.chat.id, "¯\\_(ツ)_/¯")
+      return
+    }
     await telegramBot.deleteMessage(msg.chat.id, respondedWith)
 
     const openAI = getOpenAI()
