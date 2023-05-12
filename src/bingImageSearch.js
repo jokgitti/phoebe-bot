@@ -17,13 +17,16 @@ export async function bingImageSearch(query, index = 0) {
 
   return new Promise((resolve, reject) => {
     request({ url, headers }, (error, _, body) => {
-      const results = JSON.parse(body).value
+      if (error) return reject(error)
 
-      if (error) {
-        reject(error)
+      try {
+        const results = JSON.parse(body).value
+        if (!results) return resolve(null)
+
+        resolve(results[index] || null)
+      } catch (err) {
+        reject(err)
       }
-
-      resolve(results[index] || null)
     })
   })
 }
