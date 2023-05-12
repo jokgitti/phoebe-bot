@@ -1,8 +1,8 @@
 import request from "request"
 
-import { bingSearchApiKey } from "./config/index.js"
+import { bingSearchApiKey } from "../config/index.js"
 
-export async function bingImageSearch(query, index = 0) {
+export async function imageSearch(query, index = 0) {
   const url = new URL("https://api.bing.microsoft.com/v7.0/images/search")
   const parameters = [
     ["q", query],

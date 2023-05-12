@@ -5,7 +5,7 @@ import info from "../../package.json" assert { type: "json" }
 
 const censorRegex = /(?<!^).(?!$)/g
 
-export const censor = (s) => s.replace(censorRegex, "*")
+export const censor = (s) => (s ? s.replace(censorRegex, "*") : typeof s)
 
 export const logger = pino({
   level: logLevel,
