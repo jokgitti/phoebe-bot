@@ -1,5 +1,5 @@
 import { getOpenAI } from "../services/openAI.js"
-import { bingImageSearch } from "../bingImageSearch.js"
+import { imageSearch } from "../search/index.js"
 import logger from "../helpers/logger.js"
 import { getTelegramBot } from "../telegramBot.js"
 
@@ -56,10 +56,10 @@ export async function lookfor(msg, match) {
   logger.debug({ ...currentContext }, "looking for")
 
   try {
-    const bingImage = await bingImageSearch(currentContext.query, currentContext.index)
-    logger.debug(bingImage)
+    const searchImageRes = await imageSearch(currentContext.query, currentContext.index)
+    logger.debug(searchImageRes)
 
-    if (!bingImage) {
+    if (!searchImageRes) {
       await telegramBot.sendMessage(msg.chat.id, "Sorry, I couldn't find anything ¯\\_(ツ)_/¯.")
       lookForContext.delete(contextKey)
 
@@ -71,7 +71,7 @@ export async function lookfor(msg, match) {
         ? sassyObessedAboutPrompt(currentContext.query)
         : sassyImageCaptionPrompt(currentContext.query)
     let caption = await getImageCaption(prompt, `Here's ${currentContext.query}`)
-    caption = `<a href='${bingImage.contentUrl}'>Download</a> / <a href='${bingImage.hostPageUrl}'>Source</a>${caption}`
+    caption = `<a href='${searchImageRes.contentUrl}'>Download</a> / <a href='${searchImageRes.hostPageUrl}'>Source</a>${caption}`
 
     const nextContext = {
       ...currentContext,
@@ -82,16 +82,16 @@ export async function lookfor(msg, match) {
     lookForContext.set(contextKey, nextContext)
 
     let response = null
-    switch (bingImage.encodingFormat) {
+    switch (searchImageRes.encodingFormat) {
       case "animatedgif": {
-        response = await telegramBot.sendAnimation(msg.chat.id, bingImage.contentUrl, {
+        response = await telegramBot.sendAnimation(msg.chat.id, searchImageRes.contentUrl, {
           caption,
           parse_mode: "HTML",
         })
         break
       }
       default: {
-        response = await telegramBot.sendPhoto(msg.chat.id, bingImage.contentUrl, {
+        response = await telegramBot.sendPhoto(msg.chat.id, searchImageRes.contentUrl, {
           caption,
           parse_mode: "HTML",
         })
@@ -105,7 +105,7 @@ export async function lookfor(msg, match) {
     })
   } catch (err) {
     logger.error({ err })
-    telegramBot.sendMessage(msg.chat.id, "Something went wrong :(")
+    telegramBot.sendMessage(msg.chat.id, "Something went wrong 😵")
   }
 }
 
@@ -136,6 +136,6 @@ export async function undo(msg) {
     lookForContext.delete(contextKey)
   } catch (err) {
     logger.error({ err })
-    telegramBot.sendMessage(msg.chat.id, "Something went wrong :(")
+    telegramBot.sendMessage(msg.chat.id, "Something went wrong 😵")
   }
 }
