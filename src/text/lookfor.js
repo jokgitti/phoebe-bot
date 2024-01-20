@@ -20,22 +20,24 @@ function getOrSetEmptyContext(key, query) {
 }
 
 const sassyImageCaptionPrompt = (image) =>
-  `act as sassy gen z teen, provide caption for image of "${image}", max 16 words`
+  `provide caption for an image of "${image}"`
 const sassyObessedAboutPrompt = (obsession) =>
-  `act as sassy gen z teen, reply to someone obsessed about "${obsession}", max 16 words`
+  `reply to someone obsessed about "${obsession}"`
 
-const getImageCaption = async (prompt, defaultCaption) => {
+const getZoomerMessage = async (prompt, defaultCaption) => {
   try {
     const openAI = getOpenAI()
 
-    const openAIResponse = await openAI.createCompletion({
-      model: "text-davinci-003",
-      prompt,
-      max_tokens: 30,
+    const completion = await openAI.chat.completions.create({
+      model: "gpt-4",
+      messages: [
+        { role: "system", content: "reply to prompts acting as a sassy gen z teen, max 16 words," },
+        { role: "user", content: prompt }
+      ],
       temperature: 1.1,
     })
 
-    return openAIResponse.data.choices[0].text
+    return completion.choices[0].message.content
   } catch (err) {
     logger.error({ err })
     return defaultCaption
@@ -70,8 +72,11 @@ export async function lookfor(msg, match) {
       currentContext.index > 2
         ? sassyObessedAboutPrompt(currentContext.query)
         : sassyImageCaptionPrompt(currentContext.query)
-    let caption = await getImageCaption(prompt, `Here's ${currentContext.query}`)
-    caption = `<a href='${searchImageRes.contentUrl}'>Download</a> / <a href='${searchImageRes.hostPageUrl}'>Source</a>${caption}`
+
+    // the format is messy because I added a new line to better format the telegram message
+    let caption = await getZoomerMessage(prompt, `Here's ${currentContext.query}`)
+    caption = `<a href='${searchImageRes.contentUrl}'>Download</a> / <a href='${searchImageRes.hostPageUrl}'>Source</a>
+${caption}`
 
     const nextContext = {
       ...currentContext,
@@ -123,15 +128,9 @@ export async function undo(msg) {
     }
     await telegramBot.deleteMessage(msg.chat.id, respondedWith)
 
-    const openAI = getOpenAI()
-    const openAIResponse = await openAI.createCompletion({
-      model: "text-davinci-003",
-      prompt: "acting as sassy gen z teen, make an half assed apology, max 16 words",
-      max_tokens: 30,
-      temperature: 1.1,
-    })
+    const message = await getZoomerMessage("make an half assed apology", "Sorryyyyyy.")
 
-    await telegramBot.sendMessage(msg.chat.id, openAIResponse.data.choices[0].text)
+    await telegramBot.sendMessage(msg.chat.id, message)
     logger.debug({ chatId: msg.chat.id, messageId: respondedWith, username: msg.from.username }, "undo message")
     lookForContext.delete(contextKey)
   } catch (err) {
