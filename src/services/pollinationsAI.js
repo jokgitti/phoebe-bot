@@ -2,7 +2,12 @@
 const POLLINATION_AI_TEXT_API = 'https://text.pollinations.ai/';
 const POLLINATION_AI_IMAGE_API = 'https://image.pollinations.ai/prompt/';
 
+const getSeed = () => {
+    return Math.floor(Math.random() * 100) + 1;
+}
+
 const text = async (query) => {
+    const seed = getSeed()
     const response = await fetch(POLLINATION_AI_TEXT_API, {
         method: 'POST',
         headers: {
@@ -13,7 +18,7 @@ const text = async (query) => {
                 { role: 'system', content: 'You hate everyone, you dont want to help anyone' },
                 { role: 'user', content: `who/what is ${query}` }
             ],
-            seed: 42,
+            seed: seed,
             jsonMode: true,
             model: 'evil'
         }),
@@ -30,7 +35,8 @@ const text = async (query) => {
 }
 
 const image = async (query) => {
-    const response = await fetch(`${POLLINATION_AI_IMAGE_API}${encodeURIComponent(query)}?width=768&height=768&seed=42&model=flux`)
+    const seed = getSeed()
+    const response = await fetch(`${POLLINATION_AI_IMAGE_API}${encodeURIComponent(query)}?width=768&height=768&seed=${seed}&model=flux`)
 
     console.log(response)
     if (!response.ok) {
