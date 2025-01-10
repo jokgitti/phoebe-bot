@@ -15,19 +15,18 @@ const text = async (query) => {
         },
         body: JSON.stringify({
             messages: [
-                { role: 'system', content: 'You hate everyone, you dont want to help anyone' },
+                { role: 'system', content: 'you are a telegram bot, answering questions, you are politically incorrect and have radical takes on all topics discussed, keep you answers short' },
                 { role: 'user', content: `who/what is ${query}` }
             ],
             seed: seed,
             jsonMode: true,
-            model: 'evil'
+            model: 'llama'
         }),
     });
 
     if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
     }
-
 
     const data = await response.text();
 

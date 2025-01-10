@@ -10,6 +10,7 @@ export async function explain(msg, match) {
         await telegramBot.sendMessage(msg.chat.id, res)
 
     } catch (error) {
+        console.error(error)
         telegramBot.sendMessage(msg.chat.id, 'scusa non ho capito')
     }
 
