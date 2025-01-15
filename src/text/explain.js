@@ -6,8 +6,8 @@ export async function explain(msg, match) {
   const query = match[1]
 
   try {
-    const res = await pollinationsAI.text(query)
-    await telegramBot.sendMessage(msg.chat.id, res.replace(/^"|"$/g, ""))
+    const { response } = await pollinationsAI.text(query)
+    await telegramBot.sendMessage(msg.chat.id, response.replace(/^"|"$/g, ""))
   } catch (error) {
     console.error(error)
     telegramBot.sendMessage(msg.chat.id, "Mi sento male 😵")
