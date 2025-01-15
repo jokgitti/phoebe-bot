@@ -36,10 +36,10 @@ const text = async (query) => {
   return data
 }
 
-const image = async (query) => {
+const image = async (query, model = "flux") => {
   const seed = getSeed()
   const response = await fetch(
-    `${POLLINATION_AI_IMAGE_API}${encodeURIComponent(query)}?width=768&height=768&seed=${seed}&model=flux-realism`
+    `${POLLINATION_AI_IMAGE_API}${encodeURIComponent(query)}?width=768&height=768&seed=${seed}&model=${model}`
   )
 
   if (!response.ok) {

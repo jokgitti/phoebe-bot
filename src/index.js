@@ -7,6 +7,7 @@ import { explain } from "./text/explain.js"
 import { generate } from "./text/generate.js"
 import { help, whoami } from "./text/help.js"
 import { inspireMe } from "./text/inspireme.js"
+import { kawaii } from "./text/kawaii.js"
 import { lookfor, undo } from "./text/lookfor.js"
 
 if (!telegramApiKey) {
@@ -32,6 +33,7 @@ telegramBot.onText(/phoebe help/i, help)
 telegramBot.onText(/phoebe whoami/i, whoami)
 telegramBot.onText(/phoebe explain (.+)/i, withAuth(explain))
 telegramBot.onText(/phoebe generate (.+)/i, withAuth(generate))
+telegramBot.onText(/phoebe kawaii (.+)/i, withAuth(kawaii))
 
 telegramBot.on("message", (msg) => {
   logger.debug({ ...msg }, "incoming message")
