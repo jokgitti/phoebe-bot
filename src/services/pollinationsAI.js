@@ -39,7 +39,7 @@ const text = async (query) => {
 const image = async (query) => {
   const seed = getSeed()
   const response = await fetch(
-    `${POLLINATION_AI_IMAGE_API}${encodeURIComponent(query)}?width=768&height=768&seed=${seed}&model=flux-pro`
+    `${POLLINATION_AI_IMAGE_API}${encodeURIComponent(query)}?width=768&height=768&seed=${seed}&model=flux-realism`
   )
 
   if (!response.ok) {
