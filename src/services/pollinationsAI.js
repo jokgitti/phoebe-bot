@@ -42,7 +42,6 @@ const image = async (query) => {
     `${POLLINATION_AI_IMAGE_API}${encodeURIComponent(query)}?width=768&height=768&seed=${seed}&model=flux-pro`
   )
 
-  console.log(response)
   if (!response.ok) {
     throw new Error(`HTTP error! status: ${response.status}`)
   }
