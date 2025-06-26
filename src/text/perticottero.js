@@ -27,6 +27,7 @@ Goodbye, little wanker 🍆 Try to not wet the bed tonight
 
 function daysSince() {
   const now = Date.now();
+  const diffTime = Math.abs(now - pertiDate);
   const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24)); 
   return diffDays
 }
