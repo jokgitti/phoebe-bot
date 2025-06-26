@@ -19,10 +19,8 @@ function getOrSetEmptyContext(key, query) {
   return { query, index: 0 }
 }
 
-const sassyImageCaptionPrompt = (image) =>
-  `provide caption for an image of "${image}"`
-const sassyObessedAboutPrompt = (obsession) =>
-  `reply to someone obsessed about "${obsession}"`
+const sassyImageCaptionPrompt = (image) => `provide caption for an image of "${image}"`
+const sassyObessedAboutPrompt = (obsession) => `reply to someone obsessed about "${obsession}"`
 
 const getZoomerMessage = async (prompt, defaultCaption) => {
   try {
@@ -32,7 +30,7 @@ const getZoomerMessage = async (prompt, defaultCaption) => {
       model: "gpt-4",
       messages: [
         { role: "system", content: "reply to prompts acting as a sassy gen z teen, max 16 words," },
-        { role: "user", content: prompt }
+        { role: "user", content: prompt },
       ],
       temperature: 1.1,
     })
