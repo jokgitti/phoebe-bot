@@ -35,7 +35,7 @@ telegramBot.onText(/phoebe whoami/i, whoami)
 telegramBot.onText(/phoebe explain (.+)/i, withAuth(explain))
 telegramBot.onText(/phoebe generate (.+)/i, withAuth(generate))
 telegramBot.onText(/phoebe kawaii (.+)/i, withAuth(kawaii))
-telegramBot.onText(/phoebe (.+)perticone(.+)/i, withAuth(thePertiGame))
+telegramBot.onText(/phoebe (.*)perticone(.*)/i, withAuth(thePertiGame))
 
 telegramBot.on("message", (msg) => {
   logger.debug({ ...msg }, "incoming message")
