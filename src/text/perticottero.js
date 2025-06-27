@@ -6,10 +6,10 @@ export async function thePertiGame(msg, _) {
   const telegramBot = getTelegramBot()
 
   try {
-    msg = "I can't believe you never though of Perticone, the italian mandrillo. You sounds like a broken AI"
+    let message = "I can't believe you never though of Perticone, the italian mandrillo. You sounds like a broken AI"
 
     if (pertiDate !== "") {
-      msg = `
+      message = `
 I know, you couldn't resist thinking about him and his white ciolla. 
 You lasted ${daysSince()} days. Congrats, I suppose (?) 👎
 Goodbye, little wanker 🍆 Try to not wet the bed tonight
@@ -18,12 +18,10 @@ Goodbye, little wanker 🍆 Try to not wet the bed tonight
 
     daysSince = Date.now()
 
-    await telegramBot.sendMessage(msg.chat.id, msg)
+    await telegramBot.sendMessage(msg.chat.id, message)
   } catch (error) {
     console.error(error)
-    if (msg && msg.chat && msg.chat.id) {
-      telegramBot.sendMessage(msg.chat.id, "PERTICERROR")
-    }
+    telegramBot.sendMessage(msg.chat.id, "PERTICERROR")
   }
 }
 
