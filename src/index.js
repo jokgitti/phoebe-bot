@@ -9,7 +9,7 @@ import { help, whoami } from "./text/help.js"
 import { inspireMe } from "./text/inspireme.js"
 import { kawaii } from "./text/kawaii.js"
 import { lookfor, undo } from "./text/lookfor.js"
-import { thePertiGame } from "./test/perticottero.js"
+import { thePertiGame } from "./text/perticottero.js"
 
 if (!telegramApiKey) {
   logger.fatal(`Invalid TELEGRAM_API_KEY value: ${telegramApiKey}`)
