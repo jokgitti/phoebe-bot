@@ -21,7 +21,9 @@ Goodbye, little wanker 🍆 Try to not wet the bed tonight
     await telegramBot.sendMessage(msg.chat.id, msg)
   } catch (error) {
     console.error(error)
-    telegramBot.sendMessage(msg.chat.id, "PERTICERROR")
+    if (msg && msg.chat && msg.chat.id) {
+      telegramBot.sendMessage(msg.chat.id, "PERTICERROR")
+    }
   }
 }
 
