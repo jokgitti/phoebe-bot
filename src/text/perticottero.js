@@ -16,7 +16,7 @@ Goodbye, little wanker 🍆 Try to not wet the bed tonight
 `
     }
 
-    daysSince = Date.now()
+    pertiDate = Date.now()
 
     await telegramBot.sendMessage(msg.chat.id, message)
   } catch (error) {
