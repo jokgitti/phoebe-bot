@@ -1,3 +1,4 @@
+import logger from "../helpers/logger.js"
 import pollinationsAI from "../services/pollinationsAI.js"
 
 export async function explain(ctx) {
@@ -7,7 +8,7 @@ export async function explain(ctx) {
     const { response } = await pollinationsAI.text(query)
     await ctx.reply(response.replace(/^"|"$/g, ""))
   } catch (error) {
-    console.error(error)
+    logger.error({ err: error })
     await ctx.reply("Mi sento male 😵")
   }
 }

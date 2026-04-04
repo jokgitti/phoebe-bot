@@ -1,5 +1,6 @@
 import { InputFile } from "grammy"
 
+import logger from "../helpers/logger.js"
 import pollinationsAI from "../services/pollinationsAI.js"
 
 export async function kawaii(ctx) {
@@ -12,7 +13,7 @@ export async function kawaii(ctx) {
 
     await ctx.replyWithPhoto(new InputFile(buffer))
   } catch (error) {
-    console.error(error)
+    logger.error({ err: error })
     await ctx.reply("めちゃくちゃににゃっちゃった ≽^•⩊•^≼")
   }
 }

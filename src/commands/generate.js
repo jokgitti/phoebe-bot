@@ -1,5 +1,6 @@
 import { InputFile } from "grammy"
 
+import logger from "../helpers/logger.js"
 import { GENERIC_ERROR } from "../helpers/replies.js"
 import pollinationsAI from "../services/pollinationsAI.js"
 
@@ -13,7 +14,7 @@ export async function generate(ctx) {
 
     await ctx.replyWithPhoto(new InputFile(buffer))
   } catch (error) {
-    console.error(error)
+    logger.error({ err: error })
     await ctx.reply(GENERIC_ERROR)
   }
 }

@@ -18,8 +18,9 @@ function setLastMention(chatId) {
     db.prepare(
       "INSERT INTO perticone (chat_id, last_mention) VALUES (?, ?) ON CONFLICT(chat_id) DO UPDATE SET last_mention = ?"
     ).run(chatId, now, now)
+  } else {
+    memoryFallback.set(chatId, Date.now())
   }
-  memoryFallback.set(chatId, Date.now())
 }
 
 export async function thePertiGame(ctx) {

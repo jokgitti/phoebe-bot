@@ -7,18 +7,8 @@ import { inspireMe } from "./commands/inspireme.js"
 import { kawaii } from "./commands/kawaii.js"
 import { lookfor, undo } from "./commands/lookfor.js"
 import { thePertiGame } from "./commands/perticottero.js"
-import { telegramApiKey } from "./config/index.js"
 import { adminOnly, authOnly } from "./helpers/auth.js"
-import logger, { censor } from "./helpers/logger.js"
-
-if (!telegramApiKey) {
-  logger.fatal(`Invalid TELEGRAM_API_KEY value: ${telegramApiKey}`)
-  process.exit(1)
-}
-
-logger.debug({
-  telegramApiKey: censor(telegramApiKey),
-})
+import logger from "./helpers/logger.js"
 
 bot.hears(/phoebe list admins/i, adminOnly, listAdmins)
 bot.hears(/phoebe list users/i, adminOnly, listUsers)
@@ -41,5 +31,6 @@ bot.catch((err) => {
   logger.error({ err }, "bot error")
 })
 
-bot.start()
-logger.info("Phoebe has entered the chat. You're welcome 💅")
+await bot.start({
+  onStart: (botInfo) => logger.info({ username: botInfo.username }, "Phoebe has entered the chat. You're welcome 💅"),
+})
