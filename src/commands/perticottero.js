@@ -28,14 +28,13 @@ export async function thePertiGame(ctx) {
     const chatId = ctx.chat.id
     const lastMention = getLastMention(chatId)
 
-    let message = "I can't believe you never though of Perticone, the italian mandrillo. You sounds like a broken AI"
+    let message = "I can't believe you never thought of Perticone, the italian mandrillo. You sound like a broken AI"
 
     if (lastMention) {
       const diffMs = Math.abs(Date.now() - lastMention)
       message = `
 I know, you couldn't resist thinking about him and his white ciolla.
-You lasted ${formatDuration(diffMs)}.
-Congrats, I suppose (?) 👎
+You lasted ${formatDuration(diffMs)}. Congrats I suppose (?) 👎
 Goodbye, little wanker 🍆 try to not wet the bed tonight! 🛏️💦
 `
     }

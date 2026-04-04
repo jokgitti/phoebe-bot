@@ -1,4 +1,5 @@
 import logger from "../helpers/logger.js"
+import { GENERIC_ERROR } from "../helpers/replies.js"
 import pollinationsAI from "../services/pollinationsAI.js"
 
 export async function explain(ctx) {
@@ -9,6 +10,6 @@ export async function explain(ctx) {
     await ctx.reply(response.replace(/^"|"$/g, ""))
   } catch (error) {
     logger.error({ err: error })
-    await ctx.reply("Mi sento male 😵")
+    await ctx.reply(GENERIC_ERROR)
   }
 }
