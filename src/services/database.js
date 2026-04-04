@@ -1,18 +1,12 @@
-import path from "node:path"
-import { fileURLToPath } from "node:url"
-
 import Database from "better-sqlite3"
 
 import { dbPath } from "../config/index.js"
 import logger from "../helpers/logger.js"
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url))
-const DB_PATH = dbPath ?? path.resolve(__dirname, "../../data/phoebe.db")
-
 let db = null
 
 try {
-  db = new Database(DB_PATH)
+  db = new Database(dbPath)
   db.pragma("journal_mode = WAL")
 
   const migrations = [
