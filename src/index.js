@@ -1,15 +1,15 @@
-import { bingSearchApiKey, telegramApiKey, openaiApiKey } from "./config/index.js"
-import { withAdminAuth, withAuth } from "./helpers/auth.js"
+import { bot } from "./bot.js"
+import { listAdmins, listUsers } from "./commands/auth.js"
+import { explain } from "./commands/explain.js"
+import { generate } from "./commands/generate.js"
+import { help, whoami } from "./commands/help.js"
+import { inspireMe } from "./commands/inspireme.js"
+import { kawaii } from "./commands/kawaii.js"
+import { lookfor, undo } from "./commands/lookfor.js"
+import { thePertiGame } from "./commands/perticottero.js"
+import { telegramApiKey } from "./config/index.js"
+import { adminOnly, authOnly } from "./helpers/auth.js"
 import logger, { censor } from "./helpers/logger.js"
-import { getTelegramBot } from "./telegramBot.js"
-import { listAdmins, listUsers } from "./text/auth.js"
-import { explain } from "./text/explain.js"
-import { generate } from "./text/generate.js"
-import { help, whoami } from "./text/help.js"
-import { inspireMe } from "./text/inspireme.js"
-import { kawaii } from "./text/kawaii.js"
-import { lookfor, undo } from "./text/lookfor.js"
-import { thePertiGame } from "./text/perticottero.js"
 
 if (!telegramApiKey) {
   logger.fatal(`Invalid TELEGRAM_API_KEY value: ${telegramApiKey}`)
@@ -17,30 +17,29 @@ if (!telegramApiKey) {
 }
 
 logger.debug({
-  bingSearchApiKey: censor(bingSearchApiKey),
-  openaiApiKey: censor(openaiApiKey),
   telegramApiKey: censor(telegramApiKey),
 })
 
-const telegramBot = getTelegramBot()
+bot.hears(/phoebe list admins/i, adminOnly, listAdmins)
+bot.hears(/phoebe list users/i, adminOnly, listUsers)
+bot.hears(/phoebe look for (.+)/i, authOnly, lookfor)
+bot.hears(/phoebe look again/i, authOnly, lookfor)
+bot.hears(/phoebe undo/i, authOnly, undo)
+bot.hears(/phoebe inspire me/i, authOnly, inspireMe)
+bot.hears(/phoebe help/i, help)
+bot.hears(/phoebe whoami/i, whoami)
+bot.hears(/phoebe explain (.+)/i, authOnly, explain)
+bot.hears(/phoebe generate (.+)/i, authOnly, generate)
+bot.hears(/phoebe kawaii (.+)/i, authOnly, kawaii)
+bot.hears(/phoebe (.*)perticone(.*)/i, authOnly, thePertiGame)
 
-telegramBot.onText(/phoebe list admins/i, withAdminAuth(listAdmins))
-telegramBot.onText(/phoebe list users/i, withAdminAuth(listUsers))
-telegramBot.onText(/phoebe look for (.+)/i, withAuth(lookfor))
-telegramBot.onText(/phoebe look again/i, withAuth(lookfor))
-telegramBot.onText(/phoebe undo/i, withAuth(undo))
-telegramBot.onText(/phoebe inspire me/i, withAuth(inspireMe))
-telegramBot.onText(/phoebe help/i, help)
-telegramBot.onText(/phoebe whoami/i, whoami)
-telegramBot.onText(/phoebe explain (.+)/i, withAuth(explain))
-telegramBot.onText(/phoebe generate (.+)/i, withAuth(generate))
-telegramBot.onText(/phoebe kawaii (.+)/i, withAuth(kawaii))
-telegramBot.onText(/phoebe (.*)perticone(.*)/i, withAuth(thePertiGame))
-
-telegramBot.on("message", (msg) => {
-  logger.debug({ ...msg }, "incoming message")
+bot.on("message", (ctx) => {
+  logger.debug({ ...ctx.message }, "incoming message")
 })
 
-telegramBot.on("polling_error", (err) => {
-  logger.error({ err }, "polling error")
+bot.catch((err) => {
+  logger.error({ err }, "bot error")
 })
+
+bot.start()
+logger.info("Phoebe has entered the chat. You're welcome 💅")

@@ -1,8 +1,6 @@
 import { adminIds, adminUsernames, userIds, userUsernames } from "../config/index.js"
 import logger from "../helpers/logger.js"
-import { getTelegramBot } from "../telegramBot.js"
-
-const telegramBot = getTelegramBot()
+import { GENERIC_ERROR } from "../helpers/replies.js"
 
 const logIds = (items) => {
   return items.reduce((acc, val) => acc + `\n- <a href='tg://user?id=${val}'>${val}</a>`, "")
@@ -12,7 +10,7 @@ const logUsernames = (items) => {
   return items.reduce((acc, val) => acc + `\n- @${val}`, "")
 }
 
-export async function listAdmins(msg) {
+export async function listAdmins(ctx) {
   try {
     let text
     if (!adminIds.length && !adminUsernames.length) {
@@ -22,13 +20,14 @@ export async function listAdmins(msg) {
         .filter((x) => x)
         .join("\n")
     }
-    telegramBot.sendMessage(msg.chat.id, text, { parse_mode: "HTML" })
+    await ctx.reply(text, { parse_mode: "HTML" })
   } catch (err) {
     logger.error({ err })
+    await ctx.reply(GENERIC_ERROR)
   }
 }
 
-export async function listUsers(msg) {
+export async function listUsers(ctx) {
   try {
     let text
     if (!userIds.length && !userUsernames.length) {
@@ -38,8 +37,9 @@ export async function listUsers(msg) {
         .filter((x) => x)
         .join("\n")
     }
-    telegramBot.sendMessage(msg.chat.id, text, { parse_mode: "HTML" })
+    await ctx.reply(text, { parse_mode: "HTML" })
   } catch (err) {
     logger.error({ err })
+    await ctx.reply(GENERIC_ERROR)
   }
 }

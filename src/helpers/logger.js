@@ -1,7 +1,7 @@
 import pino from "pino"
 
+import info from "../../package.json" with { type: "json" }
 import { logLevel } from "../config/index.js"
-import info from "../../package.json" assert { type: "json" }
 
 const censorRegex = /(?<!^).(?!$)/g
 
