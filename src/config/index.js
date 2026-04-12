@@ -1,5 +1,5 @@
 import * as dotenv from "dotenv"
-dotenv.config()
+dotenv.config({ quiet: true })
 
 export const adminIds = process.env.ADMIN_IDS ? process.env.ADMIN_IDS.split(",") : []
 export const adminUsernames = process.env.ADMIN_USERNAMES ? process.env.ADMIN_USERNAMES.split(",") : []
