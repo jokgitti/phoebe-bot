@@ -27,7 +27,10 @@ bot.use((ctx, next) => {
 bot.api.config.use(async (prev, method, payload, signal) => {
   const result = await prev(method, payload, signal)
   if (method !== "getUpdates") {
-    logger.info({ method, chat_id: payload.chat_id, text: payload.text ?? payload.photo ?? payload.caption }, "outgoing")
+    logger.info(
+      { method, chat_id: payload.chat_id, text: payload.text ?? payload.photo ?? payload.caption },
+      "outgoing"
+    )
   }
   return result
 })

@@ -23,10 +23,9 @@ async function fetchWithRetry(url, options, { attempts = 3, baseDelay = 500 } = 
 }
 
 async function getVqd(query) {
-  const res = await fetchWithRetry(
-    `https://duckduckgo.com/?q=${encodeURIComponent(query)}&iax=images&ia=images`,
-    { headers: DDG_HEADERS }
-  )
+  const res = await fetchWithRetry(`https://duckduckgo.com/?q=${encodeURIComponent(query)}&iax=images&ia=images`, {
+    headers: DDG_HEADERS,
+  })
   if (!res.ok) throw new Error(`DDG init request failed: ${res.status}`)
   const html = await res.text()
   const match = html.match(/vqd=["']?([\d-]+)["']?/) ?? html.match(/vqd=([\w-]+)/)
@@ -36,7 +35,7 @@ async function getVqd(query) {
 
 export async function searchImages(query) {
   const vqd = await getVqd(query)
-  const url = `https://duckduckgo.com/i.js?q=${encodeURIComponent(query)}&vqd=${vqd}&p=1&f=,,,`
+  const url = `https://duckduckgo.com/i.js?q=${encodeURIComponent(query)}&vqd=${vqd}&p=-1&f=,,,`
   const res = await fetchWithRetry(url, {
     headers: { ...DDG_HEADERS, Accept: "application/json", Referer: "https://duckduckgo.com/" },
   })
