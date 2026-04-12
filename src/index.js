@@ -6,7 +6,7 @@ import { help, whoami } from "./commands/help.js"
 import { inspireMe } from "./commands/inspireme.js"
 import { kawaii } from "./commands/kawaii.js"
 import { lookfor, undo } from "./commands/lookfor.js"
-import { thePertiGame } from "./commands/perticottero.js"
+import { pertiStats, thePertiGame } from "./commands/perticottero.js"
 import { adminOnly, authOnly } from "./helpers/auth.js"
 import logger from "./helpers/logger.js"
 
@@ -41,6 +41,7 @@ bot.hears(/phoebe whoami/i, whoami)
 bot.hears(/phoebe explain (.+)/i, authOnly, explain)
 bot.hears(/phoebe generate (.+)/i, authOnly, generate)
 bot.hears(/phoebe kawaii (.+)/i, authOnly, kawaii)
+bot.hears(/phoebe perti-stats/i, authOnly, pertiStats)
 bot.hears(/phoebe (.*)perticone(.*)/i, authOnly, thePertiGame)
 
 bot.catch((err) => {
