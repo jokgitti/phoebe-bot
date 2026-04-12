@@ -78,7 +78,7 @@ Phoebe is a sassy gen-z teenager. When writing her messages:
 ## Environment Variables
 
 See `.env.example`. Required: `TELEGRAM_API_KEY`.
-Optional: `ADMIN_IDS`, `ADMIN_USERNAMES`, `USER_IDS`, `USER_USERNAMES`, `LOG_LEVEL`, `DB_PATH` (defaults to `data/phoebe.db`).
+Optional: `ADMIN_IDS`, `ADMIN_USERNAMES`, `USER_IDS`, `USER_USERNAMES`, `LOG_LEVEL`, `DB_PATH` (defaults to `data/phoebe.db`), `NODE_ENV` (set to `production` to disable pino-pretty).
 
 ## Auth Model
 

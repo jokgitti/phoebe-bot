@@ -20,9 +20,9 @@ try {
     db.exec(migration)
   }
 
-  logger.info("Database initialized")
+  logger.info("Okay the database is set up, don't make it weird 🗄️")
 } catch (err) {
-  logger.warn({ err }, "Failed to initialize database, falling back to in-memory")
+  logger.warn({ err }, "Ugh the database said no, using my brain instead 🧠")
   db = null
 }
 

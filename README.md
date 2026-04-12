@@ -49,6 +49,7 @@ cp .env.example .env
 | `USER_USERNAMES`   | No       | Comma-separated Telegram usernames allowed to use the bot    |
 | `LOG_LEVEL`        | No       | Pino log level (default: `debug`)                            |
 | `DB_PATH`          | No       | Path to the SQLite database file (default: `data/phoebe.db`) |
+| `NODE_ENV`         | No       | Set to `production` to disable pino-pretty (plain JSON logs) |
 
 ### Running
 
