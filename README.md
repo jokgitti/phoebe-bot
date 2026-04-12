@@ -9,10 +9,11 @@ All commands are triggered by messages starting with `phoebe` (case-insensitive)
 | Command | Access | Description |
 | --- | --- | --- |
 | `phoebe help` | User | Lists available commands |
-| `phoebe whoami` | User | Returns your Telegram user ID |
-| `phoebe look for <query>` | User | Searches DuckDuckGo Images and returns the first result |
-| `phoebe look again` | User | Returns the next image from the last search (up to 10) |
-| `phoebe undo` | User | Deletes the last image Phoebe sent |
+| `phoebe whoami` | None | Returns your Telegram user ID |
+| `phoebe look for <query>` | User | DuckDuckGo image search, NSFW included — returns first result with source link |
+| `phoebe look for safe <query>` | User | Same as above but safe search on (SFW only) |
+| `phoebe look again` | User | Next result from the last search (up to 10) |
+| `phoebe undo` | User | Deletes the last image Phoebe sent — can be repeated to undo multiple results |
 | `phoebe generate <prompt>` | User | Generates an AI image via pollinations.ai |
 | `phoebe kawaii <prompt>` | User | Generates an anime-style image via pollinations.ai |
 | `phoebe inspire me` | User | Random inspirational quote image from InspireBot |

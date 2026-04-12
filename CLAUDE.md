@@ -27,10 +27,10 @@ src/
   services/
     pollinationsAI.js   # Pollinations.ai API (image works, text broken)
     inspireMeBot.js     # InspireBot API
-    duckDuckGo.js       # DuckDuckGo image search (vqd token scraping)
+    duckDuckGo.js       # DuckDuckGo image search (vqd token scraping, safe/nsfw toggle)
   commands/
     help.js             # help, whoami
-    lookfor.js          # look for, look again, undo (DuckDuckGo images)
+    lookfor.js          # look for (nsfw/sfw), look again, undo (DuckDuckGo images)
     explain.js          # DEPRECATED - pollinations.ai text (broken)
     generate.js         # AI image generation (pollinations.ai)
     kawaii.js           # Anime image generation (pollinations.ai)
@@ -44,21 +44,22 @@ src/
 
 All commands are triggered by messages starting with `phoebe` (case-insensitive).
 
-| Command                      | Auth  | Notes                                           |
-| ---------------------------- | ----- | ----------------------------------------------- |
-| `phoebe help`                | User  | Lists available commands                        |
-| `phoebe whoami`              | None  | Shows user's Telegram ID                        |
-| `phoebe look for <query>`    | User  | DuckDuckGo image search, returns first result   |
-| `phoebe look again`          | User  | Next result from last search (up to 10)         |
-| `phoebe undo`                | User  | Deletes the last image Phoebe sent              |
-| `phoebe inspire me`          | User  | Random InspireBot image                         |
-| `phoebe perti-stats`         | User  | Perticone Hall of Shame — last 7 days           |
-| `phoebe <...>perticone<...>` | User  | Easter egg game                                 |
-| `phoebe list admins`         | Admin | Lists configured admins                         |
-| `phoebe list users`          | Admin | Lists configured users                          |
-| `phoebe explain <topic>`     | User  | **DEPRECATED** (pollinations.ai text API)       |
-| `phoebe generate <prompt>`   | User  | AI image generation (pollinations.ai)           |
-| `phoebe kawaii <prompt>`     | User  | Anime-style image generation (pollinations.ai)  |
+| Command                           | Auth  | Notes                                                        |
+| --------------------------------- | ----- | ------------------------------------------------------------ |
+| `phoebe help`                     | User  | Lists available commands                                     |
+| `phoebe whoami`                   | None  | Shows user's Telegram ID                                     |
+| `phoebe look for <query>`         | User  | DuckDuckGo image search, NSFW included, shuffled results     |
+| `phoebe look for safe <query>`    | User  | Same but SFW only                                            |
+| `phoebe look again`               | User  | Next result from last search (up to 10)                      |
+| `phoebe undo`                     | User  | Deletes last sent image; repeatable up to the full stack     |
+| `phoebe inspire me`               | User  | Random InspireBot image                                      |
+| `phoebe perti-stats`              | User  | Perticone Hall of Shame — last 7 days                        |
+| `phoebe <...>perticone<...>`      | User  | Easter egg game                                              |
+| `phoebe list admins`              | Admin | Lists configured admins                                      |
+| `phoebe list users`               | Admin | Lists configured users                                       |
+| `phoebe explain <topic>`          | User  | **DEPRECATED** (pollinations.ai text API)                    |
+| `phoebe generate <prompt>`        | User  | AI image generation (pollinations.ai)                        |
+| `phoebe kawaii <prompt>`          | User  | Anime-style image generation (pollinations.ai)               |
 
 ## Phoebe's Voice
 
@@ -102,4 +103,4 @@ The pollinations.ai **image** API still works and is used by:
 ## Known Tech Debt
 
 - `explain` command still wired up but pollinations.ai text API is broken.
-- DuckDuckGo image search relies on scraping a `vqd` token from raw HTML (`src/services/duckDuckGo.js`) — fragile, can break silently if DDG changes their page.
+- DuckDuckGo image search relies on scraping a `vqd` token from raw HTML (`src/services/duckDuckGo.js`) — fragile, can break silently if DDG changes their page or blocks the endpoint (has happened before with the `v7exp` query param).

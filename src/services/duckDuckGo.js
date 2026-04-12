@@ -33,13 +33,14 @@ async function getVqd(query) {
   return match[1]
 }
 
-export async function searchImages(query) {
+export async function searchImages(query, { safe = false } = {}) {
   const vqd = await getVqd(query)
-  const url = `https://duckduckgo.com/i.js?q=${encodeURIComponent(query)}&vqd=${vqd}&p=-1&f=,,,`
+  const safeParam = safe ? "1" : "-1"
+  const url = `https://duckduckgo.com/i.js?q=${encodeURIComponent(query)}&vqd=${vqd}&p=${safeParam}&f=,,,`
   const res = await fetchWithRetry(url, {
     headers: { ...DDG_HEADERS, Accept: "application/json", Referer: "https://duckduckgo.com/" },
   })
   if (!res.ok) throw new Error(`DDG image search failed: ${res.status}`)
   const data = await res.json()
-  return data.results?.map((r) => r.image) ?? []
+  return data.results?.map((r) => ({ image: r.image, url: r.url, title: r.title })) ?? []
 }

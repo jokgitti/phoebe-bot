@@ -5,7 +5,7 @@ import { generate } from "./commands/generate.js"
 import { help, whoami } from "./commands/help.js"
 import { inspireMe } from "./commands/inspireme.js"
 import { kawaii } from "./commands/kawaii.js"
-import { lookfor, undo } from "./commands/lookfor.js"
+import { lookfor, lookforSafe, undo } from "./commands/lookfor.js"
 import { pertiStats, thePertiGame } from "./commands/perticottero.js"
 import { adminOnly, authOnly } from "./helpers/auth.js"
 import logger from "./helpers/logger.js"
@@ -37,6 +37,7 @@ bot.api.config.use(async (prev, method, payload, signal) => {
 
 bot.hears(/phoebe list admins/i, adminOnly, listAdmins)
 bot.hears(/phoebe list users/i, adminOnly, listUsers)
+bot.hears(/phoebe look for safe (.+)/i, authOnly, lookforSafe)
 bot.hears(/phoebe look for (.+)/i, authOnly, lookfor)
 bot.hears(/phoebe look again/i, authOnly, lookfor)
 bot.hears(/phoebe undo/i, authOnly, undo)

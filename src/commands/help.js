@@ -3,7 +3,8 @@ import { GENERIC_ERROR } from "../helpers/replies.js"
 
 const HELP_TEXT = `ugh fine, here's what I can do 💅
 
-🔍 phoebe look for <query> — finds you an image, you're welcome 🖼️
+🔍 phoebe look for <query> — finds you an image (nsfw included) 🖼️
+🔒 phoebe look for safe <query> — same but sfw only, you prude 😇
 ⏭️ phoebe look again — next result, because the first one wasn't good enough 🙄
 ↩️ phoebe undo — pretend that never happened 🫣
 ✨ phoebe generate <prompt> — makes you an AI image 🎨

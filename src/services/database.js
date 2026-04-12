@@ -18,7 +18,12 @@ try {
 export function migrate(...statements) {
   if (!db) return
   for (const sql of statements) {
-    db.exec(sql)
+    try {
+      db.exec(sql)
+    } catch (err) {
+      // ignore "duplicate column name" so additive ALTER TABLE migrations are idempotent
+      if (!err.message?.includes("duplicate column name")) throw err
+    }
   }
 }
 
