@@ -3,7 +3,10 @@ import { GENERIC_ERROR } from "../helpers/replies.js"
 
 const HELP_TEXT = `ugh fine, here's what I can do 💅
 
-✨ phoebe generate <prompt> — makes you an AI image, you're welcome 🎨
+🔍 phoebe look for <query> — finds you an image, you're welcome 🖼️
+⏭️ phoebe look again — next result, because the first one wasn't good enough 🙄
+↩️ phoebe undo — pretend that never happened 🫣
+✨ phoebe generate <prompt> — makes you an AI image 🎨
 🌸 phoebe kawaii <prompt> — anime version bc obviously 🇯🇵
 🌟 phoebe inspire me — unsolicited wisdom from the universe ✌️
 🏆 phoebe perti-stats — the Perticone Hall of Shame, last 7 days 🍆

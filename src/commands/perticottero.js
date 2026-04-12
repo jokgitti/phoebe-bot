@@ -1,6 +1,22 @@
 import logger from "../helpers/logger.js"
 import { GENERIC_ERROR } from "../helpers/replies.js"
-import db from "../services/database.js"
+import db, { migrate } from "../services/database.js"
+
+migrate(
+  `CREATE TABLE IF NOT EXISTS perticone (
+    chat_id INTEGER PRIMARY KEY,
+    last_mention TEXT NOT NULL
+  )`,
+  `CREATE TABLE IF NOT EXISTS perticone_calls (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    chat_id INTEGER NOT NULL,
+    user_id INTEGER NOT NULL,
+    username TEXT,
+    called_at TEXT NOT NULL DEFAULT (datetime('now'))
+  )`,
+  `CREATE INDEX IF NOT EXISTS idx_perticone_calls_chat_called
+    ON perticone_calls (chat_id, called_at)`
+)
 
 const memoryFallback = new Map()
 

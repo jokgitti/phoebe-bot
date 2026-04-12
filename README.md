@@ -10,29 +10,20 @@ All commands are triggered by messages starting with `phoebe` (case-insensitive)
 | --- | --- | --- |
 | `phoebe help` | User | Lists available commands |
 | `phoebe whoami` | User | Returns your Telegram user ID |
+| `phoebe look for <query>` | User | Searches DuckDuckGo Images and returns the first result |
+| `phoebe look again` | User | Returns the next image from the last search (up to 10) |
+| `phoebe undo` | User | Deletes the last image Phoebe sent |
 | `phoebe generate <prompt>` | User | Generates an AI image via pollinations.ai |
 | `phoebe kawaii <prompt>` | User | Generates an anime-style image via pollinations.ai |
 | `phoebe inspire me` | User | Random inspirational quote image from InspireBot |
-| `phoebe perti-stats` | User | Weekly leaderboard of who mentioned Perticone the most |
+| `phoebe perti-stats` | User | Perticone Hall of Shame — last 7 days |
 | `phoebe ...perticone...` | User | Tracks how long since someone last mentioned Perticone |
 | `phoebe list admins` | Admin | Lists configured admin IDs/usernames |
 | `phoebe list users` | Admin | Lists configured user IDs/usernames |
 
-### WIP commands
-
-- `phoebe look for <query>` / `phoebe look again` / `phoebe undo` - image search (provider TBD)
-
 ### Deprecated commands
 
 - `phoebe explain <topic>` - AI-generated explanations (pollinations.ai text API is broken)
-
-### WIP commands
-
-- `phoebe look for <query>` / `phoebe look again` / `phoebe undo` - image search (being reworked)
-
-### Deprecated commands
-
-- `phoebe explain <topic>` - AI-generated explanations (pollinations.ai text API, currently broken)
 
 ## Setup
 
