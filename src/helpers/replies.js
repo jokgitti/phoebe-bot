@@ -1,2 +1,2 @@
-export const GENERIC_ERROR = "Ugh my brain just glitched, I literally can't rn 💀"
-export const WIP = "Bestie this feature is still cooking, come back later 👩‍🍳"
+export const GENERIC_ERROR = "ugh my brain just glitched, i literally can't rn 💀"
+export const WIP = "bestie this feature is still cooking, come back later 👩‍🍳"

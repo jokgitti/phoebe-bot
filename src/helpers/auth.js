@@ -15,10 +15,10 @@ export const adminOnly = async (ctx, next) => {
     try {
       if (isUser(ctx.from)) {
         logger.warn({ from: ctx.from }, "A non-admin user wrote to me")
-        await ctx.reply("Nice try bestie, but you're not the main character here 💅")
+        await ctx.reply("nice try bestie, but you're not the main character here 💅")
       } else {
         logger.warn({ from: ctx.from }, "An unknown user wrote to me")
-        await ctx.reply("Please stop talking to me, i have a boyfriend 😠")
+        await ctx.reply("please stop talking to me, i have a boyfriend 😠")
       }
     } catch (err) {
       logger.error({ err })
@@ -38,7 +38,7 @@ export const authOnly = async (ctx, next) => {
   if (!isAdmin(ctx.from) && !isUser(ctx.from)) {
     try {
       logger.warn({ from: ctx.from }, "An unknown user wrote to me")
-      await ctx.reply("Please stop talking to me, i have a boyfriend 😠")
+      await ctx.reply("please stop talking to me, i have a boyfriend 😠")
     } catch (err) {
       logger.error({ err })
     }

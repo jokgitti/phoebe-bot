@@ -64,7 +64,7 @@ function setLastMention(chatId) {
 
 export function buildStatsChart(rows) {
   if (rows.length === 0) {
-    return "Nobody thought about Perticone this week. Suspicious 👀"
+    return "nobody thought about Perticone this week. suspicious 👀"
   }
 
   const BAR_MAX = 12

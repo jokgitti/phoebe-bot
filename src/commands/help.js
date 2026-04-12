@@ -26,7 +26,7 @@ export async function help(ctx) {
 
 export async function whoami(ctx) {
   try {
-    await ctx.reply(`Your user id is ${ctx.from.id} 🤓`, {
+    await ctx.reply(`your user id is ${ctx.from.id} 🤓`, {
       reply_parameters: { message_id: ctx.message.message_id },
     })
   } catch (err) {
