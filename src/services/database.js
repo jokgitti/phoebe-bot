@@ -9,9 +9,9 @@ try {
   db = new Database(dbPath)
   db.pragma("journal_mode = WAL")
 
-  logger.info("Okay the database is set up, don't make it weird 🗄️")
+  logger.info("okay the database is set up, don't make it weird 🗄️")
 } catch (err) {
-  logger.warn({ err }, "Ugh the database said no, using my brain instead 🧠")
+  logger.warn({ err }, "ugh the database said no, using my brain instead 🧠")
   db = null
 }
 

@@ -49,5 +49,5 @@ bot.catch((err) => {
 })
 
 await bot.start({
-  onStart: (botInfo) => logger.info(`Phoebe has entered the chat as @${botInfo.username}. You're welcome 💅`),
+  onStart: (botInfo) => logger.info(`phoebe has entered the chat as @${botInfo.username}. you're welcome 💅`),
 })
