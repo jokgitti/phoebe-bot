@@ -9,21 +9,17 @@ try {
   db = new Database(dbPath)
   db.pragma("journal_mode = WAL")
 
-  const migrations = [
-    `CREATE TABLE IF NOT EXISTS perticone (
-      chat_id INTEGER PRIMARY KEY,
-      last_mention TEXT NOT NULL
-    )`,
-  ]
-
-  for (const migration of migrations) {
-    db.exec(migration)
-  }
-
-  logger.info("Database initialized")
+  logger.info("okay the database is set up, don't make it weird 🗄️")
 } catch (err) {
-  logger.warn({ err }, "Failed to initialize database, falling back to in-memory")
+  logger.warn({ err }, "ugh the database said no, using my brain instead 🧠")
   db = null
+}
+
+export function migrate(...statements) {
+  if (!db) return
+  for (const sql of statements) {
+    db.exec(sql)
+  }
 }
 
 export default db

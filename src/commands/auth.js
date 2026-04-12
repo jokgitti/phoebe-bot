@@ -14,9 +14,9 @@ export async function listAdmins(ctx) {
   try {
     let text
     if (!adminIds.length && !adminUsernames.length) {
-      text = "No admins? Bestie this place is literally ungoverned 😩"
+      text = "no admins? bestie this place is literally ungoverned 😩"
     } else {
-      text = ["Ugh fine, here are the admins I guess 🙄", logIds(adminIds), logUsernames(adminUsernames)]
+      text = ["ugh fine, here are the admins I guess 🙄", logIds(adminIds), logUsernames(adminUsernames)]
         .filter((x) => x)
         .join("\n")
     }
@@ -31,9 +31,9 @@ export async function listUsers(ctx) {
   try {
     let text
     if (!userIds.length && !userUsernames.length) {
-      text = "No users? So literally nobody is allowed in here 💀"
+      text = "no users? so literally nobody is allowed in here 💀"
     } else {
-      text = ["Ugh fine, here are the users I guess 🙄", logIds(userIds), logUsernames(userUsernames)]
+      text = ["ugh fine, here are the users I guess 🙄", logIds(userIds), logUsernames(userUsernames)]
         .filter((x) => x)
         .join("\n")
     }

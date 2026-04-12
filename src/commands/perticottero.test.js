@@ -1,7 +1,12 @@
 import assert from "node:assert/strict"
-import { describe, it } from "node:test"
+import { describe, it, mock } from "node:test"
 
-import { formatDuration } from "./perticottero.js"
+mock.module("../services/database.js", {
+  defaultExport: null,
+  namedExports: { migrate: () => {} },
+})
+
+const { formatDuration } = await import("./perticottero.js")
 
 describe("formatDuration", () => {
   it("returns '0 seconds' for 0ms", () => {

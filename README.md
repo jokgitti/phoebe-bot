@@ -2,22 +2,28 @@
 
 A Telegram bot with the personality of a sassy gen-z teen. She generates images, shares inspirational quotes, and keeps track of how long you can go without mentioning Perticone.
 
-## Features
+## Commands
 
-- **Image generation** (`phoebe generate <prompt>`) - generates an image from a text prompt via pollinations.ai.
-- **Kawaii mode** (`phoebe kawaii <prompt>`) - generates an anime-style image via pollinations.ai.
-- **Inspiration** (`phoebe inspire me`) - fetches a random inspirational quote image from InspireBot.
-- **Perticone game** (`phoebe <...>perticone<...>`) - tracks how long since someone last mentioned Perticone.
-- **Admin tools** (`phoebe list admins`, `phoebe list users`) - inspect configured access lists.
-- **Identity** (`phoebe whoami`) - returns your Telegram user ID.
+All commands are triggered by messages starting with `phoebe` (case-insensitive). Most require user-level access.
 
-### WIP commands
-
-- `phoebe look for <query>` / `phoebe look again` / `phoebe undo` - image search (being reworked)
+| Command | Access | Description |
+| --- | --- | --- |
+| `phoebe help` | User | Lists available commands |
+| `phoebe whoami` | User | Returns your Telegram user ID |
+| `phoebe look for <query>` | User | Searches DuckDuckGo Images and returns the first result |
+| `phoebe look again` | User | Returns the next image from the last search (up to 10) |
+| `phoebe undo` | User | Deletes the last image Phoebe sent |
+| `phoebe generate <prompt>` | User | Generates an AI image via pollinations.ai |
+| `phoebe kawaii <prompt>` | User | Generates an anime-style image via pollinations.ai |
+| `phoebe inspire me` | User | Random inspirational quote image from InspireBot |
+| `phoebe perti-stats` | User | Perticone Hall of Shame — last 7 days |
+| `phoebe ...perticone...` | User | Tracks how long since someone last mentioned Perticone |
+| `phoebe list admins` | Admin | Lists configured admin IDs/usernames |
+| `phoebe list users` | Admin | Lists configured user IDs/usernames |
 
 ### Deprecated commands
 
-- `phoebe explain <topic>` - AI-generated explanations (pollinations.ai text API, currently broken)
+- `phoebe explain <topic>` - AI-generated explanations (pollinations.ai text API is broken)
 
 ## Setup
 
@@ -49,6 +55,7 @@ cp .env.example .env
 | `USER_USERNAMES`   | No       | Comma-separated Telegram usernames allowed to use the bot    |
 | `LOG_LEVEL`        | No       | Pino log level (default: `debug`)                            |
 | `DB_PATH`          | No       | Path to the SQLite database file (default: `data/phoebe.db`) |
+| `NODE_ENV`         | No       | Set to `production` to disable pino-pretty (plain JSON logs) |
 
 ### Running
 
