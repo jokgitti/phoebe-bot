@@ -1,6 +1,7 @@
 import { InputFile } from "grammy"
 
 import logger from "../helpers/logger.js"
+import { pushHistory } from "../services/history.js"
 import pollinationsAI from "../services/pollinationsAI.js"
 
 export async function kawaii(ctx) {
@@ -11,7 +12,8 @@ export async function kawaii(ctx) {
     const arrayBuffer = await res.arrayBuffer()
     const buffer = Buffer.from(arrayBuffer)
 
-    await ctx.replyWithPhoto(new InputFile(buffer))
+    const sent = await ctx.replyWithPhoto(new InputFile(buffer))
+    pushHistory(ctx.from.id, "kawaii", null, sent.message_id)
   } catch (error) {
     logger.error({ err: error })
     await ctx.reply("めちゃくちゃににゃっちゃった ≽^•⩊•^≼")

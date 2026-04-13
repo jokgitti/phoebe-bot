@@ -3,16 +3,16 @@ import { GENERIC_ERROR } from "../helpers/replies.js"
 
 const HELP_TEXT = `ugh fine, here's what I can do 💅
 
-🔍 phoebe look for <query> — finds you an image (nsfw included) 🖼️
-🔒 phoebe look for safe <query> — same but sfw only, you prude 😇
-⏭️ phoebe look again — next result, because the first one wasn't good enough 🙄
-↩️ phoebe undo — pretend that never happened 🫣
-✨ phoebe generate <prompt> — makes you an AI image 🎨
-🌸 phoebe kawaii <prompt> — anime version bc obviously 🇯🇵
-🌟 phoebe inspire me — unsolicited wisdom from the universe ✌️
-🏆 phoebe perti-stats — the Perticone Hall of Shame, last 7 days 🍆
-🎮 phoebe perticone — you know what this does, bestie 🫦
-🪪 phoebe whoami — for when you have an existential crisis 🪞
+🔍 look for <query> — finds you an image (nsfw included) 🖼️
+🔒 look for safe <query> — same but sfw only, you prude 😇
+⏭️ look again — next result, because the first one wasn't good enough 🙄
+↩️ undo — pretend that never happened 🫣
+✨ generate <prompt> — makes you an AI image 🎨
+🌸 kawaii <prompt> — anime version bc obviously 🇯🇵
+🌟 inspire me — unsolicited wisdom from the universe ✌️
+🏆 perti-stats — the Perticone Hall of Shame, last 7 days 🍆
+🎮 perticone — you know what this does, bestie 🫦
+🪪 whoami — for when you have an existential crisis 🪞
 
 don't make me repeat myself 🙄`
 

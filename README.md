@@ -8,23 +8,23 @@ All commands are triggered by messages starting with `phoebe` (case-insensitive)
 
 | Command | Access | Description |
 | --- | --- | --- |
-| `phoebe help` | User | Lists available commands |
-| `phoebe whoami` | None | Returns your Telegram user ID |
-| `phoebe look for <query>` | User | DuckDuckGo image search, NSFW included — returns first result with source link |
-| `phoebe look for safe <query>` | User | Same as above but safe search on (SFW only) |
-| `phoebe look again` | User | Next result from the last search (up to 10) |
-| `phoebe undo` | User | Deletes the last image Phoebe sent — can be repeated to undo multiple results |
-| `phoebe generate <prompt>` | User | Generates an AI image via pollinations.ai |
-| `phoebe kawaii <prompt>` | User | Generates an anime-style image via pollinations.ai |
-| `phoebe inspire me` | User | Random inspirational quote image from InspireBot |
-| `phoebe perti-stats` | User | Perticone Hall of Shame — last 7 days |
-| `phoebe ...perticone...` | User | Tracks how long since someone last mentioned Perticone |
-| `phoebe list admins` | Admin | Lists configured admin IDs/usernames |
-| `phoebe list users` | Admin | Lists configured user IDs/usernames |
+| `/phoebe help` | User | Lists available commands |
+| `/phoebe whoami` | None | Returns your Telegram user ID |
+| `/phoebe look for <query>` | User | DuckDuckGo image search, NSFW included — returns first result with source link |
+| `/phoebe look for safe <query>` | User | Same as above but safe search on (SFW only) |
+| `/phoebe look again` | User | Next result from the last search |
+| `/phoebe undo` | User | Deletes the last Phoebe message — works for look, generate, kawaii, inspire me |
+| `/phoebe generate <prompt>` | User | Generates an AI image via pollinations.ai |
+| `/phoebe kawaii <prompt>` | User | Generates an anime-style image via pollinations.ai |
+| `/phoebe inspire me` | User | Random inspirational quote image from InspireBot |
+| `/phoebe perti-stats` | User | Perticone Hall of Shame — last 7 days |
+| `/phoebe ...perticone...` | User | Tracks how long since someone last mentioned Perticone |
+| `/phoebe list admins` | Admin | Lists configured admin IDs/usernames |
+| `/phoebe list users` | Admin | Lists configured user IDs/usernames |
 
 ### Deprecated commands
 
-- `phoebe explain <topic>` - AI-generated explanations (pollinations.ai text API is broken)
+- `/phoebe explain <topic>` - AI-generated explanations (pollinations.ai text API is broken)
 
 ## Setup
 
@@ -49,14 +49,15 @@ cp .env.example .env
 
 | Variable           | Required | Description                                                  |
 | ------------------ | -------- | ------------------------------------------------------------ |
-| `TELEGRAM_API_KEY` | Yes      | Telegram Bot API token                                       |
 | `ADMIN_IDS`        | No       | Comma-separated Telegram user IDs with admin access          |
 | `ADMIN_USERNAMES`  | No       | Comma-separated Telegram usernames with admin access         |
+| `DB_PATH`          | No       | Path to the SQLite database file (default: `data/phoebe.db`) |
+| `HISTORY_LIMIT`    | No       | Max commands tracked per user for undo (default: `10`)       |
+| `LOG_LEVEL`        | No       | Pino log level (default: `debug`)                            |
+| `NODE_ENV`         | No       | Set to `production` to disable pino-pretty (plain JSON logs) |
+| `TELEGRAM_API_KEY` | Yes      | Telegram Bot API token                                       |
 | `USER_IDS`         | No       | Comma-separated Telegram user IDs allowed to use the bot     |
 | `USER_USERNAMES`   | No       | Comma-separated Telegram usernames allowed to use the bot    |
-| `LOG_LEVEL`        | No       | Pino log level (default: `debug`)                            |
-| `DB_PATH`          | No       | Path to the SQLite database file (default: `data/phoebe.db`) |
-| `NODE_ENV`         | No       | Set to `production` to disable pino-pretty (plain JSON logs) |
 
 ### Running
 

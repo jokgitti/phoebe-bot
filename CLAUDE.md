@@ -28,9 +28,12 @@ src/
     pollinationsAI.js   # Pollinations.ai API (image works, text broken)
     inspireMeBot.js     # InspireBot API
     duckDuckGo.js       # DuckDuckGo image search (vqd token scraping, safe/nsfw toggle)
+    history.js          # phoebe_history table — tracks sent messages for undo/look-again
+    database.js         # SQLite setup and migrate() helper
   commands/
     help.js             # help, whoami
-    lookfor.js          # look for (nsfw/sfw), look again, undo (DuckDuckGo images)
+    lookfor.js          # look for (nsfw/sfw), look again (DuckDuckGo images)
+    undo.js             # undo — generic, works for any command that pushes to history
     explain.js          # DEPRECATED - pollinations.ai text (broken)
     generate.js         # AI image generation (pollinations.ai)
     kawaii.js           # Anime image generation (pollinations.ai)
@@ -42,24 +45,7 @@ src/
 
 ## Commands
 
-All commands are triggered by messages starting with `phoebe` (case-insensitive).
-
-| Command                           | Auth  | Notes                                                        |
-| --------------------------------- | ----- | ------------------------------------------------------------ |
-| `phoebe help`                     | User  | Lists available commands                                     |
-| `phoebe whoami`                   | None  | Shows user's Telegram ID                                     |
-| `phoebe look for <query>`         | User  | DuckDuckGo image search, NSFW included, shuffled results     |
-| `phoebe look for safe <query>`    | User  | Same but SFW only                                            |
-| `phoebe look again`               | User  | Next result from last search (up to 10)                      |
-| `phoebe undo`                     | User  | Deletes last sent image; repeatable up to the full stack     |
-| `phoebe inspire me`               | User  | Random InspireBot image                                      |
-| `phoebe perti-stats`              | User  | Perticone Hall of Shame — last 7 days                        |
-| `phoebe <...>perticone<...>`      | User  | Easter egg game                                              |
-| `phoebe list admins`              | Admin | Lists configured admins                                      |
-| `phoebe list users`               | Admin | Lists configured users                                       |
-| `phoebe explain <topic>`          | User  | **DEPRECATED** (pollinations.ai text API)                    |
-| `phoebe generate <prompt>`        | User  | AI image generation (pollinations.ai)                        |
-| `phoebe kawaii <prompt>`          | User  | Anime-style image generation (pollinations.ai)               |
+See [README.md](README.md) for the full command reference.
 
 ## Phoebe's Voice
 
@@ -70,18 +56,19 @@ Phoebe is a sassy gen-z teenager. When writing her messages:
 - **Emoji usage:** Generous but not excessive — 💅 🫠 😌 😠 🤓 are on-brand
 - **Error messages:** Never dry or technical. She's annoyed, confused, or having a meltdown — not reporting a stack trace
 - **Examples of good error messages:**
-  - "Ugh my brain just glitched, I literally can't rn 🫠"
-  - "Something went wrong and honestly? Not my problem 💅"
-  - "Mi sento male 😵" (Italian flair is fine)
+  - "my image search is having a meltdown rn, try again in a sec 🫠"
+  - "literally nothing came up, maybe try a different vibe? 🤷"
+  - "bestie I'm running on vibes rn, no database no stats 🧠💨"
+  - "nothing to undo bestie 🫠"
 - **Examples of bad error messages:**
   - "An error occurred. Please try again later."
   - "Error 500"
-  - "PERTICERROR"
+  - "Internal server error"
 
 ## Environment Variables
 
 See `.env.example`. Required: `TELEGRAM_API_KEY`.
-Optional: `ADMIN_IDS`, `ADMIN_USERNAMES`, `USER_IDS`, `USER_USERNAMES`, `LOG_LEVEL`, `DB_PATH` (defaults to `data/phoebe.db`), `NODE_ENV` (set to `production` to disable pino-pretty).
+Optional: `ADMIN_IDS`, `ADMIN_USERNAMES`, `USER_IDS`, `USER_USERNAMES`, `LOG_LEVEL`, `DB_PATH` (defaults to `data/phoebe.db`), `HISTORY_LIMIT` (default: `10`), `NODE_ENV` (set to `production` to disable pino-pretty).
 
 ## Auth Model
 

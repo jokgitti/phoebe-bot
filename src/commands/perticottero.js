@@ -74,10 +74,11 @@ export function buildStatsChart(rows) {
   const lines = rows.map((row, i) => {
     const name = row.username ? `@${row.username}` : String(row.user_id)
     const bars = Math.max(1, Math.round((row.count / max) * BAR_MAX))
-    return `${i + 1}. ${name.padEnd(nameWidth)}  ${"█".repeat(bars)} ${row.count}`
+    const bar = "█".repeat(bars) + "░".repeat(BAR_MAX - bars)
+    return `${i + 1}. ${name.padEnd(nameWidth)}\n   ${bar} ${row.count}`
   })
 
-  return `📊 Perticone Hall of Shame — last 7 days\n\n${lines.join("\n")}`
+  return `Perticone Hall of Shame (last 7 days)\n\n${lines.join("\n")}`
 }
 
 export function formatDuration(diffMs) {
